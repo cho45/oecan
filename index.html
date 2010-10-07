@@ -3,7 +3,6 @@
 	<head>
 		<title></title>
 		<meta charset="utf-8"/>
-		<link rel="stylesheet" type="text/css" href="/base.css" media="screen,tv"/>
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 		<script type="text/javascript" src="script.js"></script>
@@ -44,5 +43,10 @@
 			<a href="javascript:O.setColor('#6666ff')" style="color:#6666ff">■</a>
 			<a href="javascript:O.setColor('#ffffff')" style="color:#ffffff">■</a>
 		</div>
+
+		<div id="tablet-warning" style="position:absolute;bottom:0;left:0;">
+			<p>Wacom タブレットをお持ちのかたは <a href="http://mozilla.jp/firefox/">Firefox</a> と<a href="http://www.wacom.com/productsupport/plugin.php">プラグイン</a>をインストールすることで筆圧機能をご利用になれます</p>
+		</div>
+		<embed name="wacom-plugin" id="wacom-plugin" type="application/x-wacom-tablet" HIDDEN="TRUE"></embed>
 	</body>
 </html>

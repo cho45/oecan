@@ -1,4 +1,31 @@
 
+function TabletPen () { this.init.apply(this, arguments) };
+TabletPen.prototype = {
+	init : function () {
+		var self = this;
+		self.wacom = self.getWacomPlugin();
+		self.supportWacom = self.wacom.isWacom;
+		self.eraser = false;
+		self.size   = 1;
+	},
+
+	setSize : function (size) {
+		this.size = size;
+	},
+
+	isEraser : function () {
+		return this.supportWacom ? this.wacom.isEraser : self.eraser;
+	},
+
+	pressure : function () {
+		return this.supportWacom ? this.wacom.pressure : 1.0;
+	},
+
+	getWacomPlugin : function () {
+		return document.embeds["wacom-plugin"];
+	}
+};
+
 function Oecan () { this.init.apply(this, arguments) };
 Oecan.prototype = {
 	init : function (container) {
@@ -16,7 +43,7 @@ Oecan.prototype = {
 		self.initPen();
 		self.bindEvents();
 
-		self.setPen(30);
+		self.setPen(5);
 	},
 
 	initCanvas : function () {
@@ -52,6 +79,8 @@ Oecan.prototype = {
 					$(self.pen).hide();
 				}
 			});
+
+		self.tabletPen = new TabletPen();
 	},
 
 	setPen : function (size) {
@@ -125,7 +154,7 @@ Oecan.prototype = {
 		$(window).mousemove(function (e) {
 			if (!down) return;
 			var x = e.clientX - ox, y = e.clientY - oy;
-			self.drawLine(ctx, self.penSize, down.x, down.y, x, y);
+			self.drawLine(ctx, self.penSize * self.tabletPen.pressure(), down.x, down.y, x, y);
 			down = {
 				x: x,
 				y: y
@@ -135,7 +164,7 @@ Oecan.prototype = {
 		$(window).mouseup(function (e) {
 			if (!down) return;
 			var x = e.clientX - ox, y = e.clientY - oy;
-			self.drawLine(ctx, self.penSize, down.x, down.y, x, y);
+			self.drawLine(ctx, self.penSize * self.tabletPen.pressure(), down.x, down.y, x, y);
 			down = null;
 		});
 		
