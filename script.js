@@ -16,7 +16,7 @@ Oecan.prototype = {
 		self.initPen();
 		self.bindEvents();
 
-		self.setPen(1);
+		self.setPen(30);
 	},
 
 	initCanvas : function () {
@@ -56,24 +56,37 @@ Oecan.prototype = {
 
 		var pen = self.pen;
 		if (size == 1) {
-			pen.setAttribute('width', '17');
-			pen.setAttribute('height', '17');
+			pen.setAttribute('width', '19');
+			pen.setAttribute('height', '19');
 			var ctx = pen.getContext('2d');
-			ctx.fillRect( 8,  0, 1, 1);
-			ctx.fillRect( 0,  8, 1, 1);
-			ctx.fillRect( 8,  8, 1, 1);
-			ctx.fillRect(16,  8, 1, 1);
-			ctx.fillRect( 8, 16, 1, 1);
+			ctx.fillStyle = '#ffffff';
+			ctx.fillRect( 8,  0, 3, 3);
+			ctx.fillRect( 0,  8, 3, 3);
+			ctx.fillRect( 8,  8, 3, 3);
+			ctx.fillRect(16,  8, 3, 3);
+			ctx.fillRect( 8, 16, 3, 3);
+			ctx.fillStyle = '#000000';
+			ctx.fillRect( 9,  1, 1, 1);
+			ctx.fillRect( 1,  9, 1, 1);
+			ctx.fillRect( 9,  9, 1, 1);
+			ctx.fillRect(17,  9, 1, 1);
+			ctx.fillRect( 9, 17, 1, 1);
 			self.penOffset =  8;
 		} else {
-			pen.setAttribute('width', size + 1);
-			pen.setAttribute('height', size + 1);
+			pen.setAttribute('width', size + 3);
+			pen.setAttribute('height', size + 3);
 			var ctx = pen.getContext('2d');
 			ctx.clearRect(0, 0, size + 1, size + 1);
-			self.drawLine(ctx, 1, 1, 1, size, 1);
-			self.drawLine(ctx, 1, size, 1, size, size);
-			self.drawLine(ctx, 1, size, size, 1, size);
-			self.drawLine(ctx, 1, 1, size, 1, 1);
+			ctx.fillStyle = '#ffffff';
+			self.drawLine(ctx, 1, 1,        1,    size + 2,    1);
+			self.drawLine(ctx, 1, size + 2, 1,    size + 2, size + 2);
+			self.drawLine(ctx, 1, size + 2, size + 2,    1, size + 2);
+			self.drawLine(ctx, 1, 1,        size + 2,    1,    1);
+			ctx.fillStyle = '#000000';
+			self.drawLine(ctx, 1, 2,        2,    size + 1,    2);
+			self.drawLine(ctx, 1, size + 1, 2,    size + 1, size + 1);
+			self.drawLine(ctx, 1, size + 1, size + 1,    2, size + 1);
+			self.drawLine(ctx, 1, 2,        size + 1,    2,    2);
 			self.penOffset =  Math.floor(size / 2) - 1;
 		}
 	},
@@ -81,6 +94,10 @@ Oecan.prototype = {
 	setColor : function (color) {
 		var self = this;
 		self.ctx.fillStyle = color;
+	},
+
+	snapshot : function () {
+		window.open(this.canvas.toDataURL('image/png'));
 	},
 
 	bindEvents : function () {
