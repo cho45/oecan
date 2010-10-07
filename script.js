@@ -34,18 +34,23 @@ Oecan.prototype = {
 			return $(self.canvas).trigger(e);
 		});
 
-		$(self.container).
-			mouseenter(function (e) {
-				$(self.pen).show();
-			}).
+		$(window).
 			mousemove(function (e) {
-				$(self.pen).offset({
-			 		top : e.clientY - self.penOffset,
-					left : e.clientX - self.penOffset,
-				});
-			}).
-			mouseleave(function (e) {
-				$(self.pen).hide();
+				var x = e.clientX, y = e.clientY;
+				var o = $(self.canvas).offset();
+				var w = $(self.canvas).width(), h = $(self.canvas).height();
+				if (o.left < x && x < o.left + w &&
+					o.top  < y && y < o.top  + h) {
+					// inner canvas
+					$(self.pen).show();
+
+					$(self.pen).offset({
+						top : e.clientY - self.penOffset,
+						left : e.clientX - self.penOffset,
+					});
+				} else {
+					$(self.pen).hide();
+				}
 			});
 	},
 
