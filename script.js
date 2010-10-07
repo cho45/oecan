@@ -14,11 +14,11 @@ TabletPen.prototype = {
 	},
 
 	isEraser : function () {
-		return this.supportWacom ? this.wacom.isEraser : self.eraser;
+		return this.wacom.pointerType == 0 ? self.eraser : this.wacom.isEraser;
 	},
 
 	pressure : function () {
-		return this.supportWacom ? this.wacom.pressure : 1.0;
+		return  this.wacom.pointerType == 0 ? 1.0 : this.wacom.pressure;
 	},
 
 	getWacomPlugin : function () {
