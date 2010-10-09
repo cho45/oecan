@@ -105,7 +105,7 @@ Oecan.prototype = {
 			ctx.fillRect( 9,  9, 1, 1);
 			ctx.fillRect(17,  9, 1, 1);
 			ctx.fillRect( 9, 17, 1, 1);
-			self.penOffset =  8;
+			self.penOffset =  9;
 		} else {
 			pen.setAttribute('width', size + 3);
 			pen.setAttribute('height', size + 3);
@@ -121,7 +121,7 @@ Oecan.prototype = {
 			self.drawLine(ctx, 1, size + 1, 2,    size + 1, size + 1);
 			self.drawLine(ctx, 1, size + 1, size + 1,    2, size + 1);
 			self.drawLine(ctx, 1, 2,        size + 1,    2,    2);
-			self.penOffset =  Math.floor(size / 2) - 1;
+			self.penOffset =  Math.floor(size / 2);
 		}
 	},
 
@@ -140,10 +140,11 @@ Oecan.prototype = {
 		var ctx    = self.ctx;
 		var down   = null;
 
-		var offset = $(canvas).offset();
-		var ox = offset.left, oy = offset.top;
+		var ox, oy;
 
 		$(canvas).mousedown(function (e) {
+			var offset = $(canvas).offset();
+			ox = offset.left, oy = offset.top;
 			var x = e.clientX - ox, y = e.clientY - oy;
 			down = {
 				x: x,
